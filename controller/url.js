@@ -25,7 +25,6 @@ async function redirectAndUpdate(req, res) {
       }
     }
   })
-  console.log(entry);
   res.redirect(entry.redirectUrl);
 }
 
