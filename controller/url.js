@@ -14,4 +14,19 @@ async function generateNewShortURL(req, res) {
   return res.json({ id: sId });
 }
 
-module.exports = { generateNewShortURL };
+async function redirectAndUpdate(req, res) {
+  const shortID=req.params.Shortid;
+  const entry= await URL.findOneAndUpdate({
+    shortId:shortID,
+  },{
+    $push:{
+      visitHistory:{
+        timestamp: Date.now(),
+      }
+    }
+  })
+  console.log(entry);
+  res.redirect(entry.redirectUrl);
+}
+
+module.exports = { generateNewShortURL,redirectAndUpdate };
