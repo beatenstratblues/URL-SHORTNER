@@ -28,4 +28,13 @@ async function redirectAndUpdate(req, res) {
   res.redirect(entry.redirectUrl);
 }
 
-module.exports = { generateNewShortURL,redirectAndUpdate };
+async function analyticsDisplay(req, res) {
+  const sID=req.params.Shortid;
+  const data=await URL.findOne({shortId:sID});
+  return res.json({
+    numberOfClicks:data.visitHistory.length,
+    history:data.visitHistory,
+  });
+}
+
+module.exports = { generateNewShortURL,redirectAndUpdate,analyticsDisplay };
